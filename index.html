@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tirage de Noël</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            min-height: 800px;
+            height: 100%;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+        }
+
+        h1 {
+            color: #5a5aed;
+            text-align: center;
+        }
+
+        .family {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .family h3 {
+            margin: 0 0 10px 0;
+            color: #5a5aed;
+        }
+
+        .family ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .family ul li {
+            margin-bottom: 5px;
+        }
+
+        button {
+            background-color: #5a5aed;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #4545c9;
+        }
+
+        button.remove {
+            background-color: #e74c3c;
+        }
+
+        button.remove:hover {
+            background-color: #c0392b;
+        }
+
+        .results {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .results ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .results ul li {
+            background-color: #eaf4ff;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+        
+        -webkit-keyframes action {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-10px);
+            }
+        }
+        @keyframes action {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .snowflake {
+            color: #fff;
+            font-size: 1em;
+            font-family: Arial, sans-serif;
+            text-shadow: 0 0 5px #000;
+        }
+
+        @-webkit-keyframes snowflakes-fall {
+            0% {
+                top: -10%;
+            }
+            100% {
+                top: 100%;
+            }
+        }
+        @-webkit-keyframes snowflakes-shake {
+            0%,
+            100% {
+                -webkit-transform: translateX(0);
+                transform: translateX(0);
+            }
+            50% {
+                -webkit-transform: translateX(80px);
+                transform: translateX(80px);
+            }
+        }
+        @keyframes snowflakes-fall {
+            0% {
+                top: -10%;
+            }
+            100% {
+                top: 100%;
+            }
+        }
+        @keyframes snowflakes-shake {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(80px);
+            }
+        }
+        .snowflake {
+            position: fixed;
+            top: -10%;
+            z-index: 9999;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            cursor: default;
+            -webkit-animation-name: snowflakes-fall, snowflakes-shake;
+            -webkit-animation-duration: 10s, 3s;
+            -webkit-animation-timing-function: linear, ease-in-out;
+            -webkit-animation-iteration-count: infinite, infinite;
+            -webkit-animation-play-state: running, running;
+            animation-name: snowflakes-fall, snowflakes-shake;
+            animation-duration: 10s, 3s;
+            animation-timing-function: linear, ease-in-out;
+            animation-iteration-count: infinite, infinite;
+            animation-play-state: running, running;
+        }
+        .snowflake:nth-of-type(0) {
+            left: 1%;
+            -webkit-animation-delay: 0s, 0s;
+            animation-delay: 0s, 0s;
+        }
+        .snowflake:nth-of-type(1) {
+            left: 10%;
+            -webkit-animation-delay: 1s, 1s;
+            animation-delay: 1s, 1s;
+        }
+        .snowflake:nth-of-type(2) {
+            left: 20%;
+            -webkit-animation-delay: 6s, 0.5s;
+            animation-delay: 6s, 0.5s;
+        }
+        .snowflake:nth-of-type(3) {
+            left: 30%;
+            -webkit-animation-delay: 4s, 2s;
+            animation-delay: 4s, 2s;
+        }
+        .snowflake:nth-of-type(4) {
+            left: 40%;
+            -webkit-animation-delay: 2s, 2s;
+            animation-delay: 2s, 2s;
+        }
+        .snowflake:nth-of-type(5) {
+            left: 50%;
+            -webkit-animation-delay: 8s, 3s;
+            animation-delay: 8s, 3s;
+        }
+        .snowflake:nth-of-type(6) {
+            left: 60%;
+            -webkit-animation-delay: 6s, 2s;
+            animation-delay: 6s, 2s;
+        }
+        .snowflake:nth-of-type(7) {
+            left: 70%;
+            -webkit-animation-delay: 2.5s, 1s;
+            animation-delay: 2.5s, 1s;
+        }
+        .snowflake:nth-of-type(8) {
+            left: 80%;
+            -webkit-animation-delay: 1s, 0s;
+            animation-delay: 1s, 0s;
+        }
+        .snowflake:nth-of-type(9) {
+            left: 90%;
+            -webkit-animation-delay: 3s, 1.5s;
+            animation-delay: 3s, 1.5s;
+        }
+        .snowflake:nth-of-type(10) {
+            left: 25%;
+            -webkit-animation-delay: 2s, 0s;
+            animation-delay: 2s, 0s;
+        }
+        .snowflake:nth-of-type(11) {
+            left: 65%;
+            -webkit-animation-delay: 4s, 2.5s;
+            animation-delay: 4s, 2.5s;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tirage de Noël</h1>
+    <div id="families-section">
+        <h2>Ajouter des familles et leurs membres</h2>
+        <div id="families-list"></div>
+        <button onclick="addFamily()">Ajouter une famille</button>
+    </div>
+    <div>
+        <button onclick="performDraw()">Effectuer le tirage</button>
+    </div>
+    <div class="results" id="results"></div>
+    <div class="snowflakes" aria-hidden="true">
+		<div class="snowflake">
+			❅
+		</div>
+		<div class="snowflake">
+			❆
+		</div>
+		<div class="snowflake">
+			❅
+		</div>
+		<div class="snowflake">
+			❆
+		</div>
+		<div class="snowflake">
+			❅
+		</div>
+		<div class="snowflake">
+			❆
+		</div>
+		<div class="snowflake">
+			❅
+		</div>
+		<div class="snowflake">
+			❆
+		</div>
+		<div class="snowflake">
+			❅
+		</div>
+		<div class="snowflake">
+			❆
+		</div>
+		<div class="snowflake">
+			❅
+		</div>
+		<div class="snowflake">
+			❆
+		</div>
+	</div>
+
+    <script>
+        const families = {};
+
+        // Ajouter une famille à l'interface
+        function addFamily() {
+            const familyId = `family-${Object.keys(families).length + 1}`;
+            families[familyId] = [];
+
+            const familyDiv = document.createElement('div');
+            familyDiv.className = 'family';
+            familyDiv.id = familyId;
+            familyDiv.innerHTML = `
+                <h3>Nouvelle famille</h3>
+                <label>Nom de la famille : </label>
+                <input type="text" onchange="updateFamilyName('${familyId}', this.value)" placeholder="Nom de la famille">
+                <button onclick="addMember('${familyId}')">Ajouter un membre</button>
+                <button class="remove" onclick="removeFamily('${familyId}')">Supprimer la famille</button>
+                <ul id="${familyId}-members"></ul>
+            `;
+            document.getElementById('families-list').appendChild(familyDiv);
+        }
+
+        // Met à jour le nom d'une famille
+        function updateFamilyName(familyId, name) {
+            families[familyId].name = name;
+            const familyDiv = document.getElementById(familyId);
+            const familyTitle = familyDiv.querySelector('h3');
+            familyTitle.textContent = "Famille "+name || 'Nouvelle famille';
+        }
+
+        // Ajouter un membre à une famille
+        function addMember(familyId) {
+            const memberName = prompt("Nom du membre :");
+            if (!memberName) return;
+
+            families[familyId].push(memberName);
+
+            const membersList = document.getElementById(`${familyId}-members`);
+            const listItem = document.createElement('li');
+            listItem.textContent = memberName;
+
+            const removeButton = document.createElement('button');
+            removeButton.textContent = '❌';
+            removeButton.className = 'remove';
+            removeButton.style.marginLeft = '10px';
+            removeButton.onclick = () => removeMember(familyId, memberName, listItem);
+
+            listItem.appendChild(removeButton);
+            membersList.appendChild(listItem);
+        }
+
+        // Supprimer une famille
+        function removeFamily(familyId) {
+            delete families[familyId];
+            document.getElementById(familyId).remove();
+        }
+
+        // Supprimer un membre d'une famille
+        function removeMember(familyId, memberName, listItem) {
+            families[familyId] = families[familyId].filter(member => member !== memberName);
+            listItem.remove();
+        }
+
+        // Effectuer le tirage
+        function performDraw() {
+            const participants = [];
+            const familyMapping = {};
+
+            // Récupérer tous les participants et leurs familles
+            for (const [familyId, members] of Object.entries(families)) {
+                members.forEach(member => {
+                    participants.push(member);
+                    familyMapping[member] = familyId;
+                });
+            }
+
+            if (participants.length < 2) {
+                alert("Ajoutez au moins deux participants !");
+                return;
+            }
+
+            const draw = generateDraw(participants, familyMapping);
+            if (draw) {
+                displayResults(draw);
+            } else {
+                document.getElementById('results').textContent = "Impossible d'effectuer un tirage respectant les contraintes.";
+            }
+        }
+
+        // Générer le tirage
+        function generateDraw(participants, familyMapping) {
+            const shuffled = [...participants];
+            let tries = 100; // Limiter les tentatives
+
+            // Fonction pour vérifier si le tirage respecte les contraintes
+            const isValidDraw = (draw) => {
+                for (let i = 0; i < participants.length; i++) {
+                    if (familyMapping[participants[i]] === familyMapping[draw[i]]) {
+                        return false;
+                    }
+                }
+                return true;
+            };
+
+            while (tries > 0) {
+                // Mélanger les participants
+                shuffled.sort(() => Math.random() - 0.5);
+
+                // Vérifier si le tirage est valide
+                if (isValidDraw(shuffled)) {
+                    const draw = {};
+                    for (let i = 0; i < participants.length; i++) {
+                        draw[participants[i]] = shuffled[i];
+                    }
+                    return draw;
+                }
+                tries--;
+            }
+            return null; // Tirage impossible après plusieurs essais
+        }
+
+        // Afficher les résultats
+        function displayResults(draw) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = "<h2>Résultats du tirage :</h2><ul>";
+            for (const [giver, receiver] of Object.entries(draw)) {
+                resultsDiv.innerHTML += `<li>${giver} offre un cadeau à ${receiver}</li>`;
+            }
+            resultsDiv.innerHTML += "</ul>";
+        }
+    </script>
+</body>
+</html>
+
